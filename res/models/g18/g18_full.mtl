@@ -1,0 +1,30 @@
+newmtl mat0
+Ns 0
+Ka 1.0 1.0 1.0
+Kd 0.00211 0.00211 0.00211
+Ks 0.0 0.0 0.0
+Ke 0 0 0
+Ni 1.0
+d 1
+illum 1
+map_Kd g18_Base_color.png
+map_bump g18_Normal_DirectX.png
+map_d g18_Height.png
+map_Ks g18_Metallic.png
+map_Ns g18_Roughness.png
+
+newmtl mat1
+Ns 250
+Ka 1.0 1.0 1.0
+Kd 0.8 0.8 0.8
+Ks 0.0 0.0 0.0
+Ke 0.0 0.0 0.0
+Ni 1.0
+d 1.0
+illum 1
+map_Kd g18_Base_color.png
+map_bump g18_Normal_DirectX.png
+map_d g18_Height.png
+map_Ks g18_Metallic.png
+map_Ns g18_Roughness.png
+

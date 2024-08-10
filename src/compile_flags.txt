@@ -1,0 +1,13 @@
+-xc++
+-std=c++11
+-stdlib=libc++
+
+-L../vendor/GLFW/lib
+
+-I../vendor/glad/include
+-I../vendor/GLFW/include
+-I../vendor/imgui/include
+-I../vendor/stb_image/include
+-I../vendor/tinyobjloader/include
+
+
