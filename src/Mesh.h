@@ -9,16 +9,6 @@ struct Vertex {
     glm::vec2 texCoord;
 };
 
-enum texture_t {
-    DIFFUSE = 0,
-    SPECULAR = 1
-};
-
-struct Texture {
-    unsigned int id;
-    texture_t type;
-    std::string path;
-};
 
 class Mesh {
 private:
@@ -27,10 +17,9 @@ private:
 
     std::vector<Vertex> vertices;
     std::vector<unsigned int> indices;
-    std::vector<Texture> textures;
 
 public:
 
-    Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures);
-    void Render(ShaderProgram* shader);
+    Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices);
+    void Render();
 };

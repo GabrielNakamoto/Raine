@@ -20,7 +20,11 @@ bool Shader::Compile(){
 		char infoLog[512];
 		glGetShaderInfoLog(m_id, 512, nullptr, infoLog);
 		std::cout << "Error: " << gl_type << " failed compilation at file path: " << file_path << "\n" << infoLog << std::endl;
-	};
+        exit(1);
+	} else {
+        std::string filename = file_path.substr(file_path.find_last_of("/") + 1);
+        std::cout << "Compiled shader " << filename << std::endl;
+    }
 	return success;
 }
 

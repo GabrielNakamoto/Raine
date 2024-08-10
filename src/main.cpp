@@ -1,5 +1,6 @@
 #include "BackEnd.h"
 #include "Renderer.h"
+#include "Input.h"
 
 int main(){
 	BackEnd::Init(SCR_WIDTH, SCR_HEIGHT, "OpenGL");
@@ -8,6 +9,7 @@ int main(){
 	while(BackEnd::WindowIsOpen()){
 
 		BackEnd::BeginFrame();
+        Input::Update();
 
         Renderer::RenderFrame();
 

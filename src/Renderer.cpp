@@ -3,6 +3,8 @@
 #include "Shader.h"
 #include "Model.h"
 
+#include "Input.h"
+
 #include "stb_image.h"
 
 namespace Renderer {
@@ -12,19 +14,19 @@ namespace Renderer {
 
     glm::mat4 projection;
     glm::mat4 view;
+    Shader* vShader = new Shader("../res/shaders/phong.vert", vertex);
+    Shader* fShader = new Shader("../res/shaders/phong.frag", fragment);
 
 	void Init(){
 
-		Shader* vShader = new Shader("../res/shaders/vertexShader.vert", vertex);
-		Shader* fShader = new Shader("../res/shaders/fragmentShader.frag", fragment);
 
 		assert(vShader->Compile());
 		assert(fShader->Compile());
 
 		shaders = new ShaderProgram(vShader, fShader);
 
-		delete vShader;
-        delete fShader;
+		/* delete vShader; */
+        /* delete fShader; */
 
         backpack = new Model("../res/models/backpack/backpack.obj");
 
@@ -54,10 +56,15 @@ namespace Renderer {
         shaders->SetMat4("model", backpack->model);
 
         backpack->Render();
+
+        if(Input::KeyPressed(GLFW_KEY_H))
+            shaders->Reload();
     }
 
     void Cleanup(){
         delete backpack;
         delete shaders;
+        delete vShader;
+        delete fShader;
     }
 }

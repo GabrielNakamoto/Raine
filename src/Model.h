@@ -5,6 +5,18 @@
 
 #include "tiny_obj_loader.h"
 
+enum texture_t {
+    DIFFUSE = 0,
+    SPECULAR = 1,
+    NORMAL = 2
+};
+
+struct Texture {
+    unsigned int id;
+    texture_t type;
+    std::string path;
+};
+
 class Model {
 private:
 
@@ -12,11 +24,13 @@ private:
 
     std::string directory;
     std::vector<Mesh> meshes;
-    std::vector<Texture> textures_loaded;
+    std::vector<Texture> textures;
 
     Mesh loadMesh(const std::vector<tinyobj::material_t>& materials, const tinyobj::mesh_t& mesh, const tinyobj::attrib_t& attrib);
     Texture newTexture(std::string& filename, texture_t type);
     unsigned int loadTextureFile(std::string& filename);
+
+    void useTextures();
 
 public:
 

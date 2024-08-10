@@ -35,10 +35,13 @@ Model::Model(const char* path){
     tinyobj::material_t& mat = materials[0];
 
     if(!mat.diffuse_texname.empty()){
-        textures_loaded.push_back(newTexture(mat.diffuse_texname, DIFFUSE));
+        textures.push_back(newTexture(mat.diffuse_texname, DIFFUSE));
     }
     if(!mat.specular_texname.empty()){
-        textures_loaded.push_back(newTexture(mat.specular_texname, SPECULAR));
+        textures.push_back(newTexture(mat.specular_texname, SPECULAR));
+    }
+    if(!mat.bump_texname.empty()){
+        textures.push_back(newTexture(mat.bump_texname, NORMAL));
     }
 
     for(size_t s = 0; s < shapes.size(); s++){
@@ -53,8 +56,6 @@ Mesh Model::loadMesh(const std::vector<tinyobj::material_t>& materials, const ti
 
     std::vector<Vertex> vertices;
     std::vector<unsigned int> indices;
-    std::vector<Texture> textures;
-    std::vector<bool> mat_ids_loaded(materials.size(), false);
 
     // iterates through every face in the mesh
     for(size_t f = 0; f < mesh.num_face_vertices.size(); f++){
@@ -84,27 +85,9 @@ Mesh Model::loadMesh(const std::vector<tinyobj::material_t>& materials, const ti
             vertices.push_back(V);
             indices.push_back(idx.vertex_index);
         }
-
-        /* if(!materials.empty()){} */
-        /* if(!mat_ids_loaded[mesh.material_ids[f]]){ */
-        /*     mat_ids_loaded[mesh.material_ids[f]] = true; */
-
-        /*     tinyobj::material_t mat = materials[mesh.material_ids[f]]; */
-        /*     /1* if(mat.diffuse_texname.empty()) *1/ */
-        /*     /1*     return Mesh(vertices, indices); *1/ */
-
-        /*     for(size_t t = 0; t < textures_loaded.size(); t++){ */
-        /*         if(textures_loaded[t].path == mat.diffuse_texname) */
-        /*             textures.push_back(textures_loaded[t]); */
-
-        /*         if(textures_loaded[t].path == mat.specular_texname) */
-        /*             textures.push_back(textures_loaded[t]); */
-        /*     } */
-        /* } */
     }
-    textures = textures_loaded;
 
-    return Mesh(vertices, indices, textures);
+    return Mesh(vertices, indices);
 }
 
 Texture Model::newTexture(std::string& filename, texture_t type){
@@ -151,12 +134,35 @@ unsigned int Model::loadTextureFile(std::string& filename){
     return id;
 }
 
+void Model::useTextures(){
+
+    for(unsigned int i = 0; i < textures.size(); i++)
+    {
+        glActiveTexture(GL_TEXTURE0 + i);
+
+        std::string uniform;
+
+        if(textures[i].type == DIFFUSE){
+            uniform = "t_diffuse";
+        } else if(textures[i].type == SPECULAR){
+            uniform = "t_specular";
+        } else if(textures[i].type == NORMAL){
+            uniform = "t_normal";
+        }
+
+        m_shader->SetInt((uniform).c_str(), i);
+
+        glBindTexture(GL_TEXTURE_2D, textures[i].id);
+    }
+}
+
 
 void Model::Render(){
     assert(m_shader);
     m_shader->Use();
+    useTextures();
     for(unsigned int i = 0; i < meshes.size(); i++)
-        meshes[i].Render(m_shader);
+        meshes[i].Render();
 }
 
 void Model::attachShader(ShaderProgram* shader){

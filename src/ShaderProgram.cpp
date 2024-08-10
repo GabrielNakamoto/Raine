@@ -1,9 +1,15 @@
 #include "ShaderProgram.h"
 
-ShaderProgram::ShaderProgram(Shader* vShader, Shader* fShader){
+ShaderProgram::ShaderProgram(Shader* vShader, Shader* fShader)
+: m_vShader(vShader), m_fShader(fShader)
+{
+    this->Link();
+}
+
+void ShaderProgram::Link(){
 	m_id = glCreateProgram();
-	glAttachShader(m_id, vShader->GetId());
-	glAttachShader(m_id, fShader->GetId());
+	glAttachShader(m_id, m_vShader->GetId());
+	glAttachShader(m_id, m_fShader->GetId());
 	glLinkProgram(m_id);
 
 	int success;
@@ -13,11 +19,23 @@ ShaderProgram::ShaderProgram(Shader* vShader, Shader* fShader){
 		char infoLog[512];
 		glGetProgramInfoLog(m_id, 512, nullptr, infoLog);
 		std::cout << "Error linking shader program info:\n" << infoLog << std::endl;
+        exit(1);
 	}
+
+    glDeleteShader(m_vShader->GetId());
+    glDeleteShader(m_vShader->GetId());
 }
 
 void ShaderProgram::Use(){
 	glUseProgram(m_id);
+}
+
+void ShaderProgram::Reload(){
+    m_vShader->Compile();
+    m_fShader->Compile();
+
+    glDeleteProgram(m_id);
+    this->Link();
 }
 
 unsigned int ShaderProgram::GetId(){
