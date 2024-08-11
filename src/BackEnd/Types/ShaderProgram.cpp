@@ -31,8 +31,11 @@ void ShaderProgram::Use(){
 }
 
 void ShaderProgram::Reload(){
-    m_vShader->Compile();
-    m_fShader->Compile();
+
+    if(!m_vShader->Compile() || !m_fShader->Compile()){
+        std::cout << "Failed shader hot load" << std::endl;
+        return;
+    }
 
     glDeleteProgram(m_id);
     this->Link();

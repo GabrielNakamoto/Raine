@@ -1,10 +1,11 @@
 #pragma once
 
-#include "Common.h"
+#include "../../Common.h"
+#include "../../Renderer/RendererCommon.h"
 
 enum shader_type {
-	vertex,
-	fragment
+    VERTEX,
+    FRAGMENT
 };
 
 class Shader {

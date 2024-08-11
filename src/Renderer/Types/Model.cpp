@@ -44,12 +44,29 @@ Model::Model(const char* path){
         textures.push_back(newTexture(mat.bump_texname, NORMAL));
     }
 
+    for(auto& mat : materials){
+        Material m = {
+            glm::vec3(mat.ambient[0], mat.ambient[1], mat.ambient[2]),
+            glm::vec3(mat.diffuse[0], mat.diffuse[1], mat.diffuse[2]),
+            glm::vec3(mat.specular[0], mat.specular[1], mat.specular[2]),
+            mat.shininess
+        };
+
+        mats.push_back(m);
+
+        std::cout << "Loaded material " << mat.name << "\n"
+            << "\tAmbience: " << mat.ambient[0] << " " << mat.ambient[1] << " "<< mat.ambient[2] << "\n"
+            << "\tDiffuse: " << mat.diffuse[0] << " " << mat.diffuse[1] << " " << mat.diffuse[2] << "\n"
+            << "\tSpecular: " << mat.specular[0] << " " << mat.diffuse[1] << " " << mat.diffuse[2] << "\n"
+            << "\tShininess: " << mat.shininess << std::endl;
+    }
+
     for(size_t s = 0; s < shapes.size(); s++){
         meshes.push_back(loadMesh(materials, shapes[s].mesh, attrib));
     }
 
-
     std::cout << "Loaded model " << model_name << std::endl;
+
 }
 
 Mesh Model::loadMesh(const std::vector<tinyobj::material_t>& materials, const tinyobj::mesh_t& mesh, const tinyobj::attrib_t& attrib){

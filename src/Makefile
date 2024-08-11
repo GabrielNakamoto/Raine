@@ -7,6 +7,11 @@ CFLAGS := -Wall -Wextra -g
 CXXFLAGS := $(CFLAGS) -std=c++11
 
 INCLUDES := -I. \
+			-I Backend \
+			-I Backend/Types \
+			-I Input \
+			-I Renderer \
+			-I Renderer/Types \
             -I../vendor/glad/include \
             -I../vendor/GLFW/include \
             -I../vendor/imgui/include \
@@ -18,6 +23,11 @@ LIBPATHS := -L../vendor/GLFW/lib
 LIBS := -lglfw.3 -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo -framework CoreFoundation
 
 SOURCES := $(wildcard *.cpp) \
+		   $(wildcard BackEnd/*.cpp) \
+		   $(wildcard BackEnd/Types/*.cpp) \
+		   $(wildcard Renderer/*.cpp) \
+		   $(wildcard Renderer/Types/*.cpp) \
+		   $(wildcard Input/*.cpp) \
            ../vendor/glad/src/glad.c \
            $(wildcard ../vendor/imgui/src/*.cpp)
 

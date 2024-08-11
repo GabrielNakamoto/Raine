@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Common.h"
+#include "../../Common.h"
+#include "../../Renderer/RendererCommon.h"
 #include "Shader.h"
 
 class ShaderProgram {

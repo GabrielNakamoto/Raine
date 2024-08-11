@@ -1,1 +1,0 @@
-store textures in model and do something w them before rendering

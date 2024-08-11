@@ -1,14 +1,7 @@
 #pragma once
 
-#include "Common.h"
-#include "ShaderProgram.h"
-
-struct Vertex {
-    glm::vec3 position;
-    glm::vec3 normal;
-    glm::vec2 texCoord;
-};
-
+#include "../../Common.h"
+#include "../RendererCommon.h"
 
 class Mesh {
 private:
@@ -17,6 +10,8 @@ private:
 
     std::vector<Vertex> vertices;
     std::vector<unsigned int> indices;
+
+    Material m_mat;
 
 public:
 
