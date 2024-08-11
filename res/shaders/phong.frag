@@ -17,36 +17,39 @@ struct Material {
     float shininess;
 };
 
-uniform Material mat;
+struct Light {
+    vec3 position;
+
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+};
+
+#define MAX_MATERIALS 5
+
+uniform Material materials[MAX_MATERIALS];
+uniform Light light;
 
 void main(){
-
-    // make uniforms?
-    vec3 lightColor = vec3(1.0f, 1.0f, 1.0f);
-    vec3 lightSource = vec3(1.0f, 1.0f, 1.0f);
     vec3 viewPos = vec3(0.0f, 0.0f, 6.0f);
-
-    float ambientStrength = 0.1;
-    float specularStrength = 0.5;
 
     vec3 normalMap = texture(t_normal, texCoord).rgb;
     normalMap = normalMap * 2.0f - 1.0f;
 
     vec3 norm = normalize(normalMap);
-    // vec3 norm = normalize(normal);
-    vec3 lightDir = lightSource - fragPos;
 
+    vec3 lightDir = normalize(light.position - fragPos);
     vec3 viewDir = normalize(viewPos - fragPos);
     vec3 reflectDir = reflect(-lightDir, norm);
 
-    vec3 specular = pow(max(dot(viewDir, reflectDir), 0.0f), 8) * specularStrength * lightColor;
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0f), 250);
+    float diff = max(dot(norm, lightDir), 0.0);
 
-    vec3 diffuse = max(dot(norm, lightDir), 0.0) * lightColor;
+    vec3 specular = light.specular * spec * vec3(texture(t_specular, texCoord).r);
+    vec3 diffuse = light.diffuse * diff * texture(t_diffuse, texCoord).rgb;
+    vec3 ambient = light.ambient * texture(t_diffuse, texCoord).rgb;
 
-    vec3 ambient = ambientStrength * lightColor;
+    vec4 result = vec4((ambient + diffuse + specular), 1.0f);
 
-    vec4 result = vec4((ambient + diffuse), 1.0f);
-
-    FragColor = texture(t_diffuse, texCoord) * result;
-    // FragColor = vec4(1.0f, 0.0f, 0.0f, 1.0f);
+    FragColor = result;
 }
