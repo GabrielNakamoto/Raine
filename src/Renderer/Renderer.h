@@ -1,9 +1,9 @@
 #pragma once
 
 #include "../Common.h"
+#include "Types/Model.h"
 
 namespace Renderer {
-	void Init();
 	void RenderFrame();
-    void Cleanup();
+    void AddModel(Model* model);
 }

@@ -5,27 +5,45 @@
 #include "Renderer/Renderer.h"
 #include "Input/Input.h"
 
-void Engine::Run(){
+#include "testState.h"
 
-	BackEnd::Init(SCR_WIDTH, SCR_HEIGHT, "OpenGL");
-    Renderer::Init();
-    Gui::Init();
+float deltaTime = 0.0f;
+float lastFrame = 0.0f;
 
-	while(BackEnd::WindowIsOpen()){
+namespace Engine {
 
-		BackEnd::BeginFrame();
-        Input::Update();
+    void Run()
+    {
 
-        Renderer::RenderFrame();
+        BackEnd::Init(SCR_WIDTH, SCR_HEIGHT, "Raine Engine");
+        Gui::Init();
 
-        /* Gui::BeginFrame(); */
-        /* Gui::TestingWindow(); */
-        /* Gui::RenderFrame(); */
+        testState* state = new testState();
 
-		BackEnd::EndFrame();
+        while(BackEnd::WindowIsOpen())
+        {
 
-	}
-	BackEnd::Cleanup();
-    Renderer::Cleanup();
+            float currentFrame = glfwGetTime();
+            deltaTime = lastFrame - currentFrame;
+            lastFrame = currentFrame;
 
+            BackEnd::BeginFrame();
+            Input::Update();
+
+            state->Update();
+
+            Renderer::RenderFrame();
+
+            /* Gui::BeginFrame(); */
+            /* Gui::TestingWindow(); */
+            /* Gui::RenderFrame(); */
+
+            BackEnd::EndFrame();
+
+        }
+        delete state;
+        BackEnd::Cleanup();
+
+    }
 }
+
