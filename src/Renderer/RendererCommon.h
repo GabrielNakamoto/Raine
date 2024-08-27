@@ -6,11 +6,12 @@
 
 using glm::vec2;
 using glm::vec3;
+using glm::mat4;
 
 struct Vertex {
-    glm::vec3 position;
-    glm::vec3 normal;
-    glm::vec2 texCoord;
+    vec3 position;
+    vec3 normal;
+    vec2 texCoord;
 };
 
 struct Material {
@@ -29,9 +30,10 @@ struct Light {
 };
 
 enum texture_t {
-    DIFFUSE = 0,
-    SPECULAR = 1,
-    NORMAL = 2
+    DIFFUSE,
+    SPECULAR,
+    NORMAL,
+    DISPLACEMENT
 };
 
 struct Texture {

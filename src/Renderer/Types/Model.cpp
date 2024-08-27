@@ -43,6 +43,9 @@ Model::Model(const char* path){
     if(!mat.bump_texname.empty()){
         textures.push_back(newTexture(mat.bump_texname, NORMAL));
     }
+    if(!mat.displacement_texname.empty()){
+        textures.push_back(newTexture(mat.displacement_texname, DISPLACEMENT));
+    }
 
     for(auto& mat : materials){
         Material m = {
@@ -112,7 +115,7 @@ Texture Model::newTexture(std::string& filename, texture_t type){
     return n_texture;
 }
 
-unsigned int Model::loadTextureFile(std::string& filename){
+unsigned int Model::loadTextureFile(const std::string& filename){
     unsigned int id;
     glGenTextures(1, &id);
     // load and generate the texture
@@ -141,6 +144,7 @@ unsigned int Model::loadTextureFile(std::string& filename){
         stbi_image_free(data);
 
         std::cout << "Loaded texture " << filename << std::endl;
+        /* std::cout << directory + filename << std::endl; */
     }
     else
     {
@@ -165,6 +169,8 @@ void Model::useTextures(){
             uniform = "t_specular";
         } else if(textures[i].type == NORMAL){
             uniform = "t_normal";
+        } else if(textures[i].type == DISPLACEMENT){
+            uniform = "t_displace";
         }
 
         m_shader->SetInt((uniform).c_str(), i);
@@ -172,7 +178,6 @@ void Model::useTextures(){
         glBindTexture(GL_TEXTURE_2D, textures[i].id);
     }
 }
-
 
 void Model::Render(){
     assert(m_shader);

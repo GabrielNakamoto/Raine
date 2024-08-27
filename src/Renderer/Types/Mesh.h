@@ -3,7 +3,7 @@
 #include "../../Common.h"
 #include "../RendererCommon.h"
 
-class Mesh {
+struct Mesh {
 private:
 
     unsigned int VAO, VBO, EBO;
@@ -15,6 +15,6 @@ private:
 
 public:
 
-    Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices);
+    Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices);
     void Render();
 };

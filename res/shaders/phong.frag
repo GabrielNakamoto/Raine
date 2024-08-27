@@ -9,6 +9,7 @@ in vec3 fragPos;
 uniform sampler2D t_diffuse;
 uniform sampler2D t_specular;
 uniform sampler2D t_normal;
+uniform sampler2D t_displace;
 
 struct Material {
     vec3 ambient;
@@ -50,6 +51,8 @@ void main(){
     vec3 ambient = light.ambient * texture(t_diffuse, texCoord).rgb;
 
     vec4 result = vec4((ambient + diffuse + specular), 1.0f);
+    // vec4 result = vec4(vec3(texture(t_normal, texCoord).rgb), 1.0f);
+    // vec4 result = vec4(1.0f, 0.0f, 0.0f, 1.0f);
 
     FragColor = result;
 }

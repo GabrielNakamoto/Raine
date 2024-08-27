@@ -8,6 +8,7 @@
 
 #include "stb_image.h"
 
+/* #include <memory> */
 // pass path names into shaderprogram
 
 namespace Renderer {
@@ -17,6 +18,7 @@ namespace Renderer {
     void RenderFrame(){
         glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glEnable(GL_DEPTH_TEST);
 
         for(auto& model : models)
             if(model) model->Render();

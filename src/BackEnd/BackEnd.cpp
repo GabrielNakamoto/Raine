@@ -23,8 +23,6 @@ namespace BackEnd {
 			std::cout << "Failed to initialize GLAD" << std::endl;
 			return;
 		}
-
-        glEnable(GL_DEPTH_TEST);
 	}
 
 	bool WindowIsOpen(){

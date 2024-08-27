@@ -1,7 +1,7 @@
 #include "Engine.h"
 
-int main(){
-
+int main()
+{
     Engine::Run();
 
 	return 0;

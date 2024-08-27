@@ -9,7 +9,7 @@ d 1
 illum 1
 map_Kd g18_Base_color.png
 map_bump g18_Normal_DirectX.png
-map_d g18_Height.png
+disp g18_Height.png
 map_Ks g18_Metallic.png
 map_Ns g18_Roughness.png
 
@@ -24,7 +24,7 @@ d 1.0
 illum 1
 map_Kd g18_Base_color.png
 map_bump g18_Normal_DirectX.png
-map_d g18_Height.png
+disp g18_Height.png
 map_Ks g18_Metallic.png
 map_Ns g18_Roughness.png
 
