@@ -33,6 +33,15 @@ void testState::Update()
 {
     if(Input::KeyPressed(GLFW_KEY_H))
         m_shaders->Reload();
+    if(Input::KeyPressed(GLFW_KEY_W))
+        wireframe = !wireframe;
+
+    if(wireframe)
+    {
+        glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+    } else {
+        glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+    }
 
     m_shaders->Use();
 
@@ -45,7 +54,6 @@ void testState::Update()
 
     m_shaders->SetMat4("projection", m_projection);
     m_shaders->SetMat4("view", view);
-    m_shaders->SetMat4("model", m_model->model);
 
     m_shaders->SetVec3("light.position", m_light.position);
     m_shaders->SetVec3("light.ambient", m_light.ambient);
