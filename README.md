@@ -1,5 +1,5 @@
 # Raine Engine
-A hobby rendering, and hopefully, video game engine.
+A hobby rendering - and hopefully video game - engine.
 Created by *Gabriel Nakamoto* with **minimal** dependencies using:
 
 - OpenGl
