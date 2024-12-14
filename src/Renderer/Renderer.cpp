@@ -13,7 +13,7 @@
 
 namespace Renderer {
 
-    vector<Model*> models;
+    vector<std::shared_ptr<Model>> models;
 
     void RenderFrame(){
         glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
@@ -24,7 +24,8 @@ namespace Renderer {
             if(model) model->Render();
     }
 
-    void AddModel(Model* model){
+    // copy constructs a new pointer to same object
+    void AddModel(std::shared_ptr<Model> model){
         models.push_back(model);
     }
 }

@@ -5,5 +5,5 @@
 
 namespace Renderer {
 	void RenderFrame();
-    void AddModel(Model* model);
+    void AddModel(std::shared_ptr<Model> model);
 }

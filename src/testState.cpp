@@ -17,7 +17,7 @@ testState::testState()
     m_shaders = new ShaderProgram(m_vShader, m_fShader);
 
     /* m_model = new Model("../res/models/g18/g18.obj"); */
-    m_model = new Model("../res/models/backpack/backpack.obj");
+    m_model = std::make_shared<Model>("../res/models/backpack/backpack.obj");
 
     // TODO: BETTER error handling
 
@@ -63,7 +63,7 @@ void testState::Update()
 }
 
 testState::~testState() {
-    delete m_model;
+    /* delete m_model; */
     delete m_camera;
     delete m_shaders;
     delete m_vShader;

@@ -182,6 +182,7 @@ void Model::useTextures(){
 void Model::Render(){
     assert(m_shader);
     m_shader->Use();
+    m_shader->SetMat4("model", model);
     useTextures();
     for(unsigned int i = 0; i < meshes.size(); i++)
         meshes[i].Render();
